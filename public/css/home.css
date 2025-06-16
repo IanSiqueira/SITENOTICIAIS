@@ -27,24 +27,24 @@ body {
 
 .navbar .nav-link {
   font-weight: 500;
-  transition: 0.3s ease;
+  transition: color 0.3s ease;
 }
 
-/* Cores dinâmicas no hover do menu */
+/* Hover com cores específicas para cada seção */
 .nav-link.cinema:hover {
-  color: #d35400 !important;
+  color: #6f42c1 !important; /* Roxo */
 }
 
 .nav-link.esportes:hover {
-  color: #198754 !important;
+  color: #198754 !important; /* Verde */
 }
 
 .nav-link.politica:hover {
-  color: #B30000 !important;
+  color: #B30000 !important; /* Vermelho */
 }
 
 .nav-link.tecnologia:hover {
-  color: #0D6EFD !important;
+  color: #0d6efd !important; /* Azul */
 }
 
 /* Carrossel */
@@ -58,7 +58,6 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Botão dentro do carrossel */
 .carousel-caption .btn {
   margin-top: 0.8rem;
   padding: 0.45rem 1.2rem;
@@ -87,7 +86,6 @@ body {
   transition: opacity 0.3s ease;
 }
 
-/* Mostra as setas ao passar o mouse */
 #carouselDestaques:hover .carousel-control-prev,
 #carouselDestaques:hover .carousel-control-next {
   opacity: 1;
@@ -165,25 +163,3 @@ h5, h4, h3, h2, h1,
   font-weight: 600;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
-
-.nav-link {
-  transition: color 0.3s ease;
-}
-
-/* Cor de destaque ao passar o mouse */
-.nav-link.cinema:hover {
-  color: #6f42c1; /* Roxo */
-}
-
-.nav-link.esportes:hover {
-  color: #198754; /* Verde bootstrap */
-}
-
-.nav-link.politica:hover {
-  color: #B30000; /* Vermelho destaque */
-}
-
-.nav-link.tecnologia:hover {
-  color: #0d6efd; /* Azul bootstrap */
-}
-
