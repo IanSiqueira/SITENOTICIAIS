@@ -32,7 +32,7 @@ body {
 
 /* Hover com cores específicas para cada seção */
 .nav-link.cinema:hover {
-  color: #6f42c1 !important; /* Roxo */
+  color: #d35400 !important; /* Roxo */
 }
 
 .nav-link.esportes:hover {
