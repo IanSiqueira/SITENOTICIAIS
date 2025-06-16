@@ -1,0 +1,17 @@
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  fetch('noticias.json')
+    .then(response => response.json())
+    .then(data => {
+      const noticia = data.find(n => n.id == id);
+      document.getElementById("titulo").innerText = noticia.titulo;
+      document.getElementById("conteudo").innerText = noticia.conteudo;
+      document.getElementById("imagem").src = noticia.imagem;
+    });
+</script>
+
+<h1 id="titulo"></h1>
+<img id="imagem" src="" alt="" class="img-fluid mb-3" />
+<p id="conteudo"></p>

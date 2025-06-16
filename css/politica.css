@@ -1,0 +1,89 @@
+body {
+  background-color: #ffffff;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #B30000 !important;
+}
+
+.navbar .navbar-text {
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+/* Estilo dos botões e textos vermelhos */
+.btn-outline-danger,
+.text-danger,
+a.text-danger {
+  color: #B30000 !important;
+  border-color: #B30000 !important;
+}
+
+.btn-outline-danger:hover {
+  background-color: #B30000 !important;
+  color: #fff !important;
+}
+
+/* Rodapé */
+footer {
+  background-color: #f8f9fa;
+}
+
+/* Botão "Leia mais" no carrossel com efeito invertido */
+.carousel-caption .btn-danger {
+  background-color: #B30000;
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.carousel-caption .btn-danger:hover {
+  background-color: white;
+  color: #B30000;
+  border: none
+}
+
+/* Estilo do fundo da legenda do carrossel */
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Imagens arredondadas no carrossel */
+.carousel-inner img {
+  border-radius: 10px;
+}
+
+/* Oculta os controles por padrão */
+#carouselPolitica .carousel-control-prev,
+#carouselPolitica .carousel-control-next {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Mostra controles ao passar o mouse no carrossel */
+#carouselPolitica:hover .carousel-control-prev,
+#carouselPolitica:hover .carousel-control-next {
+  opacity: 1;
+}
+
+/* Ícones vermelhos com fundo arredondado */
+#carouselPolitica .carousel-control-prev-icon,
+#carouselPolitica .carousel-control-next-icon {
+  background-color: #B30000;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-size: 60% 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover mais escuro nos ícones */
+#carouselPolitica .carousel-control-prev:hover .carousel-control-prev-icon,
+#carouselPolitica .carousel-control-next:hover .carousel-control-next-icon {
+  background-color: #800000;
+}

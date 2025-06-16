@@ -1,0 +1,90 @@
+body {
+  background-color: #ffffff;
+}
+
+/* Navbar */
+.bg-tecnologia {
+  background-color: #0066cc !important;
+}
+
+.navbar .navbar-text {
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+/* Cores principais */
+.text-tecnologia,
+a.text-tecnologia {
+  color: #0066cc !important;
+}
+
+.btn-outline-tecnologia {
+  color: #0066cc !important;
+  border-color: #0066cc !important;
+}
+
+.btn-outline-tecnologia:hover {
+  background-color: #0066cc !important;
+  color: #fff !important;
+}
+
+/* Botão do carrossel */
+.btn-tecnologia {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-tecnologia:hover {
+  background-color: white;
+  color: #0066cc;
+  border: 1px solid #0066cc;
+}
+
+/* Carrossel */
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.carousel-inner img {
+  border-radius: 10px;
+}
+
+/* Ocultar botões por padrão */
+#carouselTecnologia .carousel-control-prev,
+#carouselTecnologia .carousel-control-next {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Mostrar ao passar o mouse */
+#carouselTecnologia:hover .carousel-control-prev,
+#carouselTecnologia:hover .carousel-control-next {
+  opacity: 1;
+}
+
+/* Ícones de navegação */
+#carouselTecnologia .carousel-control-prev-icon,
+#carouselTecnologia .carousel-control-next-icon {
+  background-color: #0066cc;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-size: 60% 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: background-color 0.3s ease;
+}
+
+#carouselTecnologia .carousel-control-prev:hover .carousel-control-prev-icon,
+#carouselTecnologia .carousel-control-next:hover .carousel-control-next-icon {
+  background-color: #004c99;
+}
+
+/* Rodapé */
+footer {
+  background-color: #f8f9fa;
+}
