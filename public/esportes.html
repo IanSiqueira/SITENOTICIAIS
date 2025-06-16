@@ -62,8 +62,8 @@
       if (carregando) return;
       carregando = true;
 
-      fetch(`https://newsapi.org/v2/everything?q=esportes+futebol+Brasil&language=pt&pageSize=10&page=${page}&sortBy=publishedAt&apiKey=${API_KEY}`)
-        .then(res => res.json())
+    fetch(`/api/esportes?page=${page}`)
+      .then(res => res.json())
         .then(data => {
           const noticias = data.articles.filter(article =>
             article.title && article.description && article.url && article.urlToImage
