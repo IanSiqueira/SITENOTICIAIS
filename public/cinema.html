@@ -64,7 +64,7 @@
       if (carregando || requestsFeitas >= maxRequests) return;
       carregando = true;
 
-      fetch(`https://newsapi.org/v2/everything?q=cinema+filmes+brasil&language=pt&pageSize=10&page=${page}&sortBy=publishedAt&apiKey=${API_KEY}`)
+    fetch(`/api/cinema?page=${page}`)
         .then(res => res.json())
         .then(data => {
           const noticias = data.articles;
