@@ -101,8 +101,7 @@
   function carregarNoticias() {
     if (isLoading) return;
     isLoading = true;
-
-    fetch(`https://newsapi.org/v2/everything?q=política+brasil&language=pt&pageSize=10&page=${page}&sortBy=publishedAt&apiKey=${API_KEY}`)
+    fetch(`/api/politica?page=${page}`)
       .then(res => res.json())
       .then(data => {
         const noticias = data.articles;
