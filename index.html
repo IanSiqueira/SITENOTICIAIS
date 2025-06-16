@@ -73,8 +73,7 @@
     function carregarNoticias() {
       if (carregando || requestsFeitas >= maxRequests) return;
       carregando = true;
-
-      fetch(`https://newsapi.org/v2/everything?q=tecnologia+brasil&language=pt&pageSize=20&page=${page}&sortBy=publishedAt&apiKey=${API_KEY}`)
+      fetch(`/api/noticias?page=${page}`)
         .then(res => res.json())
         .then(data => {
           const noticias = data.articles;
