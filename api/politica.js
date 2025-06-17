@@ -8,18 +8,28 @@ function carregarNoticias() {
   if (carregando || requestsFeitas >= maxRequests) return;
   carregando = true;
 
-fetch(`https://newsapi.org/v2/everything?q=política+brasil&language=pt&pageSize=10&page=${page}&sortBy=publishedAt&apiKey=${API_KEY}`)
+  fetch(`https://newsapi.org/v2/everything?q=política+brasil&language=pt&pageSize=10&page=${page}&sortBy=publishedAt&apiKey=${API_KEY}`)
     .then(res => res.json())
     .then(data => {
-      const noticias = data.articles;
       const container = document.getElementById("politica-container");
       const carousel = document.getElementById("carousel-inner");
 
-      if (!noticias || !Array.isArray(noticias) || noticias.length === 0) {
-        container.innerHTML += "<p>Sem mais notícias.</p>";
+      // Debug: veja o que foi retornado
+      console.log("Resposta da NewsAPI:", data);
+
+      if (data.status !== "ok" || !Array.isArray(data.articles)) {
+        container.innerHTML += "<p>Erro ao processar dados da API.</p>";
+        carregando = false;
         return;
       }
 
+      const noticias = data.articles;
+
+      if (noticias.length === 0) {
+        container.innerHTML += "<p>Sem mais notícias.</p>";
+        carregando = false;
+        return;
+      }
 
       noticias.forEach((article, index) => {
         if (
@@ -30,7 +40,7 @@ fetch(`https://newsapi.org/v2/everything?q=política+brasil&language=pt&pageSize
           article.urlToImage.includes("null")
         ) return;
 
-        // Carrossel
+        // Carrossel (primeira página, 5 primeiros itens)
         if (page === 1 && index < 5) {
           carousel.innerHTML += `
             <div class="carousel-item ${index === 0 ? 'active' : ''}">
@@ -47,7 +57,7 @@ fetch(`https://newsapi.org/v2/everything?q=política+brasil&language=pt&pageSize
         container.innerHTML += `
           <div class="row mb-4 pb-3 border-bottom">
             <div class="col-md-5">
-              <img src="${article.urlToImage}" class="img-fluid rounded" alt="Imagem">
+              <img src="${article.urlToImage}" class="img-fluid rounded" alt="Imagem da notícia">
             </div>
             <div class="col-md-7">
               <h5 class="fw-bold text-danger">${article.title}</h5>
@@ -63,7 +73,7 @@ fetch(`https://newsapi.org/v2/everything?q=política+brasil&language=pt&pageSize
     })
     .catch(error => {
       console.error("Erro ao carregar NewsAPI:", error);
-      document.getElementById("politica-container").innerHTML += "<p>Erro ao carregar notícias.</p>";
+      document.getElementById("politica-container").innerHTML += "<p class='text-danger'>Erro ao carregar notícias.</p>";
       carregando = false;
     });
 }
