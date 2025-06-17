@@ -8,17 +8,18 @@ function carregarNoticias() {
   if (carregando || requestsFeitas >= maxRequests) return;
   carregando = true;
 
-fetch(`/api/politica?page=${page}`)
+fetch(`https://newsapi.org/v2/everything?q=política+brasil&language=pt&pageSize=10&page=${page}&sortBy=publishedAt&apiKey=${API_KEY}`)
     .then(res => res.json())
     .then(data => {
       const noticias = data.articles;
       const container = document.getElementById("politica-container");
       const carousel = document.getElementById("carousel-inner");
 
-      if (!noticias || noticias.length === 0) {
+      if (!noticias || !Array.isArray(noticias) || noticias.length === 0) {
         container.innerHTML += "<p>Sem mais notícias.</p>";
         return;
       }
+
 
       noticias.forEach((article, index) => {
         if (
