@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>I+ POLÍTICA</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/politica.css" />
-  <link rel="icon" href="/icons/I+POLITICA.png" />
+  <link href="css/politica.css" rel="stylesheet" />
+  <link rel="icon" href="icons/I+POLITICA.png">
 </head>
 <body>
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
     <div class="container">
-      <a class="navbar-icon" href="/index.html">
-        <img src="/img/icone-casa.svg" alt="Ícone Casa" width="24" />
+      <a class="navbar-icon" href="index.html">
+        <img src="img/icone-casa.svg" alt="Ícone Casa" width="24" />
       </a>
       <span class="navbar-text text-white">POLÍTICA</span>
     </div>
@@ -25,10 +25,12 @@
     <div id="carouselPolitica" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
       <div class="carousel-inner" id="carousel-inner"></div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselPolitica" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
       </button>
       <button class="carousel-control-next" type="button" data-bs-target="#carouselPolitica" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Próximo</span>
       </button>
     </div>
   </div>
@@ -36,32 +38,10 @@
   <!-- Conteúdo -->
   <div class="container my-5">
     <div class="row">
-      <!-- Coluna principal -->
       <div class="col-md-8" id="politica-container"></div>
-
-      <!-- Coluna lateral com blogs -->
       <div class="col-md-4">
-        <h6 class="fw-bold border-bottom pb-2">Blogs</h6>
-
-        <div class="d-flex align-items-center mb-3">
-          <img src="/img/ana-flor.jpg" alt="Ana Flor" class="me-2 rounded" width="50" height="50">
-          <strong><a href="https://pt.wikipedia.org/wiki/Ana_Flor" target="_blank" class="text-danger text-decoration-none">Ana Flor</a></strong>
-        </div>
-
-        <div class="d-flex align-items-center mb-3">
-          <img src="/img/andreia-sadi.jpg" alt="Andréia Sadi" class="me-2 rounded" width="50" height="50">
-          <strong><a href="https://pt.wikipedia.org/wiki/Andr%C3%A9ia_Sadi" target="_blank" class="text-danger text-decoration-none">Andréia Sadi</a></strong>
-        </div>
-
-        <div class="d-flex align-items-center mb-3">
-          <img src="/img/gerson-camarotti.jpg" alt="Gerson Camarotti" class="me-2 rounded" width="50" height="50">
-          <strong><a href="https://pt.wikipedia.org/wiki/Gerson_Camarotti" target="_blank" class="text-danger text-decoration-none">Gerson Camarotti</a></strong>
-        </div>
-
-        <div class="d-flex align-items-center mb-3">
-          <img src="/img/natuza.jpg" alt="Julia Duailibi" class="me-2 rounded" width="50" height="50">
-          <strong><a href="https://pt.wikipedia.org/wiki/Julia_Duailibi" target="_blank" class="text-danger text-decoration-none">Julia Duailibi</a></strong>
-        </div>
+        <h6 class="fw-bold border-bottom pb-2">Destaques Políticos</h6>
+        <div id="politica-lateral"></div>
       </div>
     </div>
   </div>
@@ -71,8 +51,86 @@
     <p class="mb-0 text-muted small">&copy; 2025 I+ - Política</p>
   </footer>
 
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="/js/politica.js"></script>
+  <script>
+    const API_KEY = "abdace74bc5b470bbae0c823922466e8";
+    let page = 1;
+    let carregando = false;
+    let carregouDestaques = false;
+
+    function carregarNoticias() {
+      if (carregando) return;
+      carregando = true;
+
+      fetch(`/api/politica?page=${page}`)
+        .then(res => res.json())
+        .then(data => {
+          const noticias = data.articles.filter(article =>
+            article.title && article.description && article.url && article.urlToImage
+          );
+
+          const container = document.getElementById("politica-container");
+          const carousel = document.getElementById("carousel-inner");
+          const lateral = document.getElementById("politica-lateral");
+
+          if (page === 1) {
+            noticias.slice(0, 5).forEach((article, index) => {
+              carousel.innerHTML += `
+                <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                  <img src="${article.urlToImage}" class="d-block w-100" style="max-height:400px; object-fit:cover;">
+                  <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
+                    <h5>${article.title}</h5>
+                    <p>${article.description}</p>
+                    <a href="${article.url}" target="_blank" class="btn btn-light btn-sm">Leia mais</a>
+                  </div>
+                </div>`;
+            });
+          }
+
+          noticias.forEach(article => {
+            container.innerHTML += `
+              <div class="row mb-4 pb-3 border-bottom">
+                <div class="col-md-5">
+                  <img src="${article.urlToImage}" class="img-fluid rounded" alt="Imagem">
+                </div>
+                <div class="col-md-7">
+                  <h5 class="fw-bold text-danger">${article.title}</h5>
+                  <p>${article.description}</p>
+                  <a href="${article.url}" target="_blank" class="btn btn-outline-danger btn-sm">Leia mais</a>
+                </div>
+              </div>`;
+          });
+
+          if (!carregouDestaques) {
+            const restantes = noticias.slice(5);
+            const aleatorios = restantes.sort(() => 0.5 - Math.random()).slice(0, 5);
+            aleatorios.forEach(article => {
+              lateral.innerHTML += `
+                <div class="d-flex align-items-start mb-3">
+                  <img src="${article.urlToImage}" class="me-2 rounded" width="80">
+                  <a href="${article.url}" target="_blank" class="text-decoration-none small text-danger">${article.title}</a>
+                </div>`;
+            });
+            carregouDestaques = true;
+          }
+
+          page++;
+          carregando = false;
+        })
+        .catch(error => {
+          document.getElementById("politica-container").innerHTML = "<p>Erro ao carregar notícias.</p>";
+          console.error("Erro ao carregar NewsAPI:", error);
+          carregando = false;
+        });
+    }
+
+    window.addEventListener("scroll", () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 300) {
+        carregarNoticias();
+      }
+    });
+
+    carregarNoticias();
+  </script>
 </body>
 </html>
