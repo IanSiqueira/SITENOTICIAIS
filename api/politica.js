@@ -8,17 +8,19 @@ function carregarNoticias() {
   if (carregando || requestsFeitas >= maxRequests) return;
   carregando = true;
 
-  fetch(`https://newsapi.org/v2/everything?q=política+brasil&language=pt&pageSize=10&page=${page}&sortBy=publishedAt&apiKey=${API_KEY}`)
-    .then(res => res.json())
+  const url = `https://newsapi.org/v2/everything?q=política+brasil&language=pt&pageSize=10&page=${page}&sortBy=publishedAt&apiKey=${API_KEY}`;
+
+  fetch(url)
+    .then(res => {
+      if (!res.ok) throw new Error(`Erro HTTP ${res.status}`);
+      return res.json();
+    })
     .then(data => {
       const container = document.getElementById("politica-container");
       const carousel = document.getElementById("carousel-inner");
 
-      // Debug: veja o que foi retornado
-      console.log("Resposta da NewsAPI:", data);
-
-      if (data.status !== "ok" || !Array.isArray(data.articles)) {
-        container.innerHTML += "<p>Erro ao processar dados da API.</p>";
+      if (!data.articles || !Array.isArray(data.articles)) {
+        container.innerHTML += "<p class='text-danger'>Erro ao processar as notícias.</p>";
         carregando = false;
         return;
       }
@@ -40,7 +42,7 @@ function carregarNoticias() {
           article.urlToImage.includes("null")
         ) return;
 
-        // Carrossel (primeira página, 5 primeiros itens)
+        // Carrossel
         if (page === 1 && index < 5) {
           carousel.innerHTML += `
             <div class="carousel-item ${index === 0 ? 'active' : ''}">
@@ -57,7 +59,7 @@ function carregarNoticias() {
         container.innerHTML += `
           <div class="row mb-4 pb-3 border-bottom">
             <div class="col-md-5">
-              <img src="${article.urlToImage}" class="img-fluid rounded" alt="Imagem da notícia">
+              <img src="${article.urlToImage}" class="img-fluid rounded" alt="Imagem">
             </div>
             <div class="col-md-7">
               <h5 class="fw-bold text-danger">${article.title}</h5>
@@ -73,7 +75,8 @@ function carregarNoticias() {
     })
     .catch(error => {
       console.error("Erro ao carregar NewsAPI:", error);
-      document.getElementById("politica-container").innerHTML += "<p class='text-danger'>Erro ao carregar notícias.</p>";
+      const container = document.getElementById("politica-container");
+      container.innerHTML += "<p class='text-danger'>Erro ao carregar notícias.</p>";
       carregando = false;
     });
 }

@@ -8,15 +8,28 @@ function carregarNoticias() {
   if (carregando || requestsFeitas >= maxRequests) return;
   carregando = true;
 
-fetch(`/api/politica?page=${page}`)
-    .then(res => res.json())
+  const url = `https://newsapi.org/v2/everything?q=política+brasil&language=pt&pageSize=10&page=${page}&sortBy=publishedAt&apiKey=${API_KEY}`;
+
+  fetch(url)
+    .then(res => {
+      if (!res.ok) throw new Error(`Erro HTTP ${res.status}`);
+      return res.json();
+    })
     .then(data => {
-      const noticias = data.articles;
       const container = document.getElementById("politica-container");
       const carousel = document.getElementById("carousel-inner");
 
-      if (!noticias || noticias.length === 0) {
+      if (!data.articles || !Array.isArray(data.articles)) {
+        container.innerHTML += "<p class='text-danger'>Erro ao processar as notícias.</p>";
+        carregando = false;
+        return;
+      }
+
+      const noticias = data.articles;
+
+      if (noticias.length === 0) {
         container.innerHTML += "<p>Sem mais notícias.</p>";
+        carregando = false;
         return;
       }
 
@@ -62,7 +75,8 @@ fetch(`/api/politica?page=${page}`)
     })
     .catch(error => {
       console.error("Erro ao carregar NewsAPI:", error);
-      document.getElementById("politica-container").innerHTML += "<p>Erro ao carregar notícias.</p>";
+      const container = document.getElementById("politica-container");
+      container.innerHTML += "<p class='text-danger'>Erro ao carregar notícias.</p>";
       carregando = false;
     });
 }
