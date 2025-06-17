@@ -87,3 +87,15 @@ footer {
 #carouselPolitica .carousel-control-next:hover .carousel-control-next-icon {
   background-color: #800000;
 }
+.btn-leia-mais {
+  background-color: #dc3545; /* vermelho bootstrap */
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-leia-mais:hover {
+  background-color: white;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
